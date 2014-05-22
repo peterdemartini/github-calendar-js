@@ -1,0 +1,27 @@
+{
+  "name": "Github Calendar",
+  "version": "0.0.0",
+  "homepage": "https://github.com/peterdemartini/github-calendar-js",
+  "authors": [
+    "Peter DeMartini <peter@superlativecode.com>"
+  ],
+  "description": "Github contributions calendar in a jQuery plugin.",
+  "main": "github-cal.js",
+  "keywords": [
+    "Github",
+    "Calendar",
+    "Contributions",
+    "jQuery"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "d3": "~3.4.8"
+  }
+}
