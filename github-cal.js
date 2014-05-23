@@ -12,7 +12,7 @@ window.githubCal = (function (global, $, d3) {
                 left: 30
             },
             width : 960,
-            height: 430,
+            height: 300,
             // Ordered from less to more contributions
             colors: [
                 '#eee',
@@ -44,7 +44,8 @@ window.githubCal = (function (global, $, d3) {
                 'Nov',
                 'Dec'
             ],
-            buckets: 9
+            buckets: 5,
+            username : 'peterdemartini'
         },
         data: [],
         setOptions: function (opts) {
@@ -53,20 +54,29 @@ window.githubCal = (function (global, $, d3) {
             obj.options.width = obj.options.width - obj.options.margin.left - obj.options.margin.right;
             obj.options.height = obj.options.height - obj.options.margin.top - obj.options.margin.bottom;
 
-            obj.options.gridSize = Math.floor(obj.options.width / 24);
-            obj.options.legendElementWidth = obj.options.gridSize * 2;
+            obj.options.gridSize = 30;
+            obj.options.legendElementWidth = obj.options.gridSize;
         },
         init: function (selector, opts) {
             obj.selector = selector;
             obj.setOptions(opts || {});
-            obj.getData(function(err, data){
+            obj.getData(function(data){
+                data = data.map(function(d){
+                    var date = new Date(d[0]);
+                    return {
+                        day : date.getDay(),
+                        month : date.getMonth(),
+                        value : d[1]
+                    };
+                });
+
                 obj.data = data;
                 obj.generate();
             });
 
         },
         getData: function (cb) {
-            $.get('https://github.com/users/peterdemartini/contributions_calendar_data', cb);
+            $.get('http://stormy-sea-4131.herokuapp.com/contributions/' + obj.options.username, cb);
         },
         generate: function () {
             var colorScale = d3.scale.quantile()
@@ -76,7 +86,7 @@ window.githubCal = (function (global, $, d3) {
                 .range(obj.options.colors);
 
             var svg = d3.select(obj.selector).append('svg')
-                .attr('width', obj.width + obj.options.margin.left + obj.options.margin.right)
+                .attr('width', obj.options.width + obj.options.margin.left + obj.options.margin.right)
                 .attr('height', obj.options.height + obj.options.margin.top + obj.options.margin.bottom)
                 .append('g')
                 .attr('transform', 'translate(' + obj.options.margin.left + ',' + obj.options.margin.top + ')');
@@ -113,18 +123,18 @@ window.githubCal = (function (global, $, d3) {
                     return ((i >= 7 && i <= 16) ? 'monthLabel mono axis axis-worktime' : 'monthLabel mono axis');
                 });
 
-            var heatMap = svg.selectAll('.hour')
-                .data(obj.options.data)
+            var heatMap = svg.selectAll('.month')
+                .data(obj.data)
                 .enter().append('rect')
                 .attr('x', function (d) {
-                    return (d.hour - 1) * obj.options.gridSize;
+                    return d.month  * obj.options.gridSize;
                 })
                 .attr('y', function (d) {
-                    return (d.day - 1) * obj.options.gridSize;
+                    return d.day * obj.options.gridSize;
                 })
                 .attr('rx', 4)
                 .attr('ry', 4)
-                .attr('class', 'hour bordered')
+                .attr('class', 'month bordered')
                 .attr('width', obj.options.gridSize)
                 .attr('height', obj.options.gridSize)
                 .style('fill', obj.options.colors[0]);

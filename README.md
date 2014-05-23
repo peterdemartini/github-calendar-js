@@ -1,4 +1,6 @@
-github-calendar-js
+Github Calendar JS
 ==================
 
-Github contributions calendar in a jQuery plugin.
+Github contributions calendar using D3.
+
+**Incomplete**
