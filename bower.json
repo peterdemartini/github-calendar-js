@@ -23,6 +23,8 @@
   ],
   "dependencies": {
     "d3": "~3.4.8",
-    "jQuery": "~2.1.0"
+    "jQuery": "~2.1.0",
+    "cal-heatmap": "~3.4.0",
+    "moment": "~2.6.0"
   }
 }
