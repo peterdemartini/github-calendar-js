@@ -5,7 +5,7 @@ Github contributions calendar using D3 and [Cal-heatmap](http://kamisama.github.
 
 ### Install
 
-1. Spin up a [Github Proxy](https://github.com/peterdemartini/github-proxy) on Heroku.
+1. Spin up a [Github Proxy](https://github.com/peterdemartini/github-proxy) on Heroku. This is used to avoid CORS errors.
 
 2. Install jQuery, moment, d3, and Cal-heatmap.
 
@@ -37,7 +37,7 @@ Github contributions calendar using D3 and [Cal-heatmap](http://kamisama.github.
 
             <script>
                 $(document).ready(function(){
-                    githubCal.init('github-cal', {
+                    githubCal.init('#github-cal', {
                         proxy: [proxy url],
                         username: [github username]
                     });

@@ -13,8 +13,8 @@ window.githubCal = (function (global, $, moment, CalHeatMap) {
         setOptions: function (opts) {
             obj.options = $.extend(obj.options, opts);
         },
-        init: function (id, opts) {
-            obj.id = id;
+        init: function (itemSelector, opts) {
+            obj.itemSelector = itemSelector;
             obj.setOptions(opts || {});
             obj.getData(function (res) {
                 var data = {},
@@ -56,7 +56,7 @@ window.githubCal = (function (global, $, moment, CalHeatMap) {
                 data: obj.data,
                 start: moment().subtract('months', 11).toDate(),
                 end: new Date(),
-                id: obj.id,
+                itemSelector: obj.itemSelector,
                 domain: 'month',
                 subDomain: 'day',
                 range: 12,
